@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'portal.middleware.user_info_middleware.UserInfoMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -57,8 +58,8 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'templates'],  # Caminho global
+        'APP_DIRS': True,  # Procura dentro de apps instalados
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -135,3 +136,6 @@ MEDIA_ROOT = DATA_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'portal.CustomUser'
+LOGIN_REDIRECT_URL = '/portal/dashboard/'

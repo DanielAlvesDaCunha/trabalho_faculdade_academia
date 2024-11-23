@@ -1,0 +1,40 @@
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+
+{% block navbar %}
+<div class="d-none d-lg-flex m-0 p-0 row h-8 paste-blue-bg">
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="m-0 px-0 py-5 flex-grow-1 row align-items-center justify-content-center paste-blue-bg">
+  <div class="d-flex flex-column align-items-center justify-content-center gap-5">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <img src="{% static 'img/logo_academia.svg'%}" alt="logo academia" style="width:300px;">
+      <h1 class="ms-3 mb-0 text-white shadow-text">A Academia</h1>
+    </div>
+    <div class="px-0 d-flex flex-column paste-blue-bg">
+      <form method="post" class="mb-lg-0 mb-4 d-flex flex-column align-items-center justify-content-center gap-3">
+        <h2 class="text-white">Login</h2>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="form-group">
+            <input type="text" id="id_username" name="username" class="form-control rounded-pill fs-5"
+                placeholder="Usuário">
+        </div>
+        <div class="form-group">
+            <input type="password" id="id_password" name="password" class="form-control rounded-pill fs-5"
+                placeholder="Senha">
+        </div>
+        <button id="btnLogin" type="submit" class="px-5 btn btn-block rounded-5 bg-black fs-4 text-white">Entrar</button>
+        <div class="d-flex flex-row gap-3 align-items-center justify-content-center grey-14o-bg rounded-5 p-5 w-sm-350">
+            {% comment %} <a class="link text-white text-decoration-none" href="{% url 'password_reset' %}">Esqueceu a senha?</a> {% endcomment %}
+            <span class="text-white">OU</span>
+            <a class="link text-white text-decoration-none" href="{% url 'portal:register' %}">Registre-se</a>
+        </div>
+      </form>
+    </div>
+</div>
+{% endblock %}

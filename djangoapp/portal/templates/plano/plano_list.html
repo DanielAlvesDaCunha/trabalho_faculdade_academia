@@ -1,0 +1,19 @@
+<h1>Planos Disponíveis</h1>
+<div class="planos-container">
+  {% for plano in planos %}
+  <div class="plan-card">
+    <h2>{{ plano.nome }}</h2>
+    <p><strong>Preço:</strong> R$ {{ plano.preco }}</p>
+    <p>{{ plano.descricao }}</p>
+    <h4>Atividades Inclusas:</h4>
+    <ul>
+      {% for atividade in plano.atividades %}
+      <li>{{ atividade }}</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'cadastro_com_plano' plano.id %}" class="choose-plan-btn"
+      >Escolher Plano</a
+    >
+  </div>
+  {% endfor %}
+</div>

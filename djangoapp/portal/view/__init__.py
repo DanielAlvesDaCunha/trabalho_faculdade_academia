@@ -1,1 +1,0 @@
-from .plano_view import PlanoListView
