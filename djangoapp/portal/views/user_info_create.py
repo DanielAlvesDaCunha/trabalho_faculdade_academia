@@ -19,26 +19,30 @@ class UserInfoCreateView(LoginRequiredMixin, FormView):
         return kwargs
 
     def get(self, request, *args, **kwargs):
-        # Verifique se o usuário já possui informações associadas antes de renderizar o formulário
-        if self.request.user.user_info and self.request.user.user_info.full_name and self.request.user.user_info.cpf and self.request.user.user_info.planos:
-            return redirect('portal:dashboard')  # Se as informações já estão preenchidas, redireciona para o dashboard
+        try:
+            # Verifique se a instância de UserInfo existe
+            user_info = self.request.user.user_info
+            if user_info:  # Verifique se a instância não é None
+                if all([user_info.full_name, user_info.cpf, user_info.planos]):
+                    return redirect('portal:dashboard')  # Redireciona para o dashboard
+        except UserInfo.DoesNotExist:
+            pass  # Continua no formulário de criação se não houver UserInfo ainda
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        # Aqui você pode integrar o pagamento ou outras lógicas, como validações adicionais
-        user_info = form.save()
-        self.request.user.user_info = user_info  # Vincula o UserInfo ao usuário
-        self.request.user.save()
+        # Salva o formulário e atualiza as informações do usuário
+        user_info = form.save(commit=False)
+        user_info.user = self.request.user
+        user_info.save()
 
-        # Simulando um pagamento bem-sucedido, você pode adicionar sua lógica de pagamento aqui
-        if user_info.planos and user_info.full_name and user_info.cpf:  # Exemplo de verificação
-            messages.success(self.request, 'Informações do usuário e pagamento processados com sucesso!')
+        # Verifica se o formulário está completo
+        if user_info.planos and user_info.full_name and user_info.cpf:
+            messages.success(self.request, 'Informações do usuário salvas com sucesso!')
             return super().form_valid(form)
         else:
-            messages.error(self.request, 'Erro ao processar as informações ou pagamento. Tente novamente.')
-            return redirect('portal:user-info-create')  # Redireciona para a página de criação de informações caso algo falhe
+            messages.error(self.request, 'Preencha todas as informações obrigatórias.')
+            return redirect('portal:user-info-create')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['css_estilo'] = static('accounts/dashboard/user_info.css')
         return context

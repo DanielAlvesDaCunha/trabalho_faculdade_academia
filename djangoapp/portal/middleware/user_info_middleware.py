@@ -7,24 +7,25 @@ class UserInfoMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # URLs que não devem ser redirecionadas
+        # Resolver as URLs dinamicamente com namespace correto
         exclude_paths = [
             reverse('portal:register'),
             reverse('portal:login'),
             reverse('portal:logout'),
-            reverse('portal:user-info-create'),
+            reverse('portal:user-info-create'),  # Incluído o namespace
+            reverse('portal:dashboard'),
         ]
 
         if request.user.is_authenticated:
-            # Ignora redirecionamento para URLs na lista de exclusão
+            # Verificar se a URL atual não está nas excluídas
             if request.path not in exclude_paths:
                 try:
                     user_info = UserInfo.objects.get(user=request.user)
-                    # Redireciona apenas se informações obrigatórias estão faltando
-                    if not user_info.full_name or not user_info.cpf or not user_info.planos:
-                        return redirect('portal:user-info-create')
+                    # Redirecionar se informações estiverem incompletas
+                    if not all([user_info.full_name, user_info.cpf, user_info.planos]):
+                        return redirect('portal:user-info-create')  # Incluído o namespace
                 except UserInfo.DoesNotExist:
-                    # Redireciona se UserInfo não existe
-                    return redirect('portal:user-info-create')
+                    # Redirecionar se o UserInfo não existir
+                    return redirect('portal:user-info-create')  # Incluído o namespace
 
         return self.get_response(request)
