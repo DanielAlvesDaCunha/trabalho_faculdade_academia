@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
@@ -14,14 +14,15 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         custom_user = get_object_or_404(CustomUser, pk=self.request.user.pk)
-        user_info = UserInfo.objects.filter(user=self.request.user).first()
         
-        if user_info:
-            custom_address = DadosMatricula.objects.filter(user_info=user_info).order_by('created_at')
-            address_count = custom_address.count()
-        else:
-            custom_address = None
-            address_count = 0
+        try:
+            user_info = UserInfo.objects.get(user=self.request.user)
+        except UserInfo.DoesNotExist:
+            # Caso o user_info não exista, você pode redirecionar ou mostrar uma mensagem de erro
+            return redirect('portal:user-info-create')  # Exemplo de redirecionamento para criar info
+
+        custom_address = DadosMatricula.objects.filter(user_info=user_info).order_by('created_at')
+        address_count = custom_address.count()
         
         dadosmatricula_id = self.request.GET.get('dadosmatricula_id')
         
