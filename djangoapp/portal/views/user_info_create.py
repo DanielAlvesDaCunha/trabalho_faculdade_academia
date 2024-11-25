@@ -40,7 +40,7 @@ class UserInfoCreateView(LoginRequiredMixin, FormView):
 
         # Exibe uma mensagem de sucesso e redireciona para o dashboard
         messages.success(self.request, 'Informações do usuário salvas com sucesso! Pagamento simulado.')
-
+        print(form.errors)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

@@ -7,30 +7,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="m-0 px-0 py-5 flex-grow-1 row align-items-center justify-content-center">
-    <form method="post" class="w-auto p-5 rounded-4 mb-lg-0 mb-4 d-flex flex-column align-items-center justify-content-center gap-3 grey-14o-bg">
-        <h2 class="h2-title-info text-center">Escolha Seu Plano</h2>
-        <div id="div_id_planos" class="w-100"> 
-            <label for="id_planos" class="form-label requiredField">Planos</label> 
-            <select name="planos" class="select form-select rounded-pill fs-5" id="id_planos"> <option value="Plano 1, Musculação">99,99, Musculação</option> <option value="Plano 2, Artes Marcias">119,99, Artes Marciais</option>
-                <option value="Plano 3, Ginastica">119,99, Ginastica</option><option value="Plano 4, Musculação, Artes Marciais e ginastica">219,99, Musculação, Artes Marciais e ginastica</option>
-            </select> 
-        </div>
-        {% csrf_token %}
-        <div class="w-100">
-            <label for="id_name" class="form-label requiredField">Nome</label>
-            <input type="text" name="full_name" maxlength="100" class="form-control rounded-pill fs-5" required="" id="id_full_name">
-        </div>
-        <div class="w-100">
-            <label for="id_cpf" class="form-label requiredField">Cpf</label>
-            <input type="text" name="cpf" class="form-control rounded-pill fs-5" required="" id="id_cpf">
-        </div>
-        
-        <div id="div_id_birthday" class="w-100"> 
-            <label for="id_birthday" class="form-label requiredField">Data de nascimento</label> 
-            <input type="text" name="birthday" class="dateinput form-control rounded-pill fs-5" required="" id="id_birthday"> <div id="id_birthday_helptext" class="form-text">Formato: DD/MM/YYYY</div> 
-        </div>
-            <button type="submit" class="btn btn-block m-2 mb-2">Pagar</button>
-    </form>
-</div>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }} <!-- Renderiza automaticamente os campos do formulário -->
+    <button type="submit">Pagar</button>
+</form>
 {% endblock %}
