@@ -13,25 +13,25 @@ class UserDashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Obtendo usuário customizado
+    # Obtendo usuário customizado
         custom_user = get_object_or_404(CustomUser, pk=self.request.user.pk)
 
-        # Recuperando UserInfo ou redirecionando
+    # Recuperando UserInfo ou redirecionando
         try:
             user_info = UserInfo.objects.get(user=self.request.user)
         except UserInfo.DoesNotExist:
             return redirect('portal:user-info-create')
 
-        # Filtrando DadosMatricula
-        custom_address = DadosMatricula.objects.filter(user_info=user_info).order_by('created_at')
+    # Filtrando DadosMatricula usando user_info.user (CustomUser)
+        custom_address = DadosMatricula.objects.filter(user_info=user_info.user).order_by('created_at')
         address_count = custom_address.count()
 
-        # Adicionando ao contexto
+    # Adicionando ao contexto
         context.update({
-            'custom_user': custom_user,
-            'user_info': user_info,
-            'custom_address': custom_address,
-            'address_count': address_count,
-        })
+        'custom_user': custom_user,
+        'user_info': user_info,
+        'custom_address': custom_address,
+        'address_count': address_count,
+    })
 
         return context

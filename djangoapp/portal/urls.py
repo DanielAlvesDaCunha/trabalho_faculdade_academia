@@ -22,5 +22,6 @@ urlpatterns = [
     path('register/', SignUp.as_view(), name='register'),
     path('user_info_create/',UserInfoCreateView.as_view(), name='user-info-create'),
     path('dashboard/',UserDashboardView.as_view(), name='dashboard'),
+    path('dashboard/edit/',UserDashboardEditView.as_view(), name='dashboard-edit'),
     
     ]
