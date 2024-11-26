@@ -1,0 +1,145 @@
+{% block content %}
+<style>
+    /* Definindo o background padrão */
+    body {
+        background-color: #A7D8FF; /* Cor de fundo semelhante a outras páginas */
+    }
+
+    /* Layout geral para o formulário de criação de avaliação */
+    .avaliacao-container {
+        padding: 3rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .flex-column {
+        flex-direction: column;
+    }
+
+    .gap-5 {
+        gap: 20px;
+    }
+
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+    }
+
+    /* Estilo para o formulário */
+    form {
+        width: 100%;
+        max-width: 600px;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para os campos do formulário */
+    .form-control {
+        padding: 0.75rem;
+        margin-bottom: 1.5rem;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .form-control:focus {
+        border-color: #A7D8FF; /* Azul claro */
+        box-shadow: 0 0 5px rgba(167, 216, 255, 0.7);
+    }
+
+    /* Estilo para o botão */
+    .btn {
+        background-color: #A7D8FF; /* Azul claro */
+        color: white;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 50px;
+        width: auto;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #89c5f6; /* Cor de hover mais escura */
+    }
+
+    /* Estilo para o link de voltar */
+    .btn-secondary {
+        background-color: #f8f9fa;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        border-radius: 50px;
+        width: auto;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #e2e6ea; /* Cor de hover mais clara */
+    }
+
+    /* Estilos adicionais para responsividade */
+    @media (max-width: 768px) {
+        .gap-5 {
+            gap: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            font-size: 1.1rem;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .btn-secondary {
+            font-size: 1.1rem;
+            padding: 0.75rem 1.5rem;
+        }
+    }
+</style>
+<!-- Fim do CSS embutido -->
+
+<div class="avaliacao-container">
+    <div class="d-flex flex-column gap-5">
+        <h2>Avaliacao Fisica</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Div para os campos do formulário -->
+            <div class="form-group">
+                {{ form.as_p }}  <!-- Renderiza o formulário com a formatação padrão de parágrafos -->
+            </div>
+            
+            <!-- Div para o botão de submissão -->
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Criar Avaliação</button>
+            </div>
+        </form>
+        
+        <br>
+
+        <!-- Div para o link de voltar -->
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'portal:agendamento' %}" class="btn btn-secondary">Voltar para a Avaliação</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

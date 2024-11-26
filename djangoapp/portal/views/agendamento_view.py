@@ -1,20 +1,20 @@
+from django.http import HttpResponseRedirect
 from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
+from django.urls import reverse
+from portal.forms.agendamento_form import AgendamentoForm
 from portal.models.agendamento_models import Agendamento
 
 class AgendamentoCreateView(CreateView):
     model = Agendamento
-    fields = ['data_horario']  # Apenas o campo que o aluno escolhe
-    template_name = 'portal/agendamento_form.html'
-    success_url = reverse_lazy('agendamento_sucesso')
+    form_class = AgendamentoForm    
+    template_name = 'agendamento/agendamento_form.html'
 
     def form_valid(self, form):
         # Adiciona o aluno logado ao agendamento
         form.instance.aluno = self.request.user
-        return super().form_valid(form)
+        agendamento = form.save()
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        # Filtro de datas indisponíveis
-        form.fields['data_horario'].queryset = Agendamento.objects.filter(disponivel=True)
-        return form
+        # Redireciona para a avaliação após criar o agendamento, passando o 'pk' da avaliação ou agendamento
+        return HttpResponseRedirect(reverse('portal:criar-avaliacao'))
+
+

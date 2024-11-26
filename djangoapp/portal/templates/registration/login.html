@@ -1,40 +1,157 @@
-{% load static %}
-
-{% block title %}Login{% endblock %}
-
-
 {% block navbar %}
+<!-- Estilo para a Navbar -->
 <div class="d-none d-lg-flex m-0 p-0 row h-8 paste-blue-bg">
+    <!-- Adicione conteúdo ou personalização aqui, caso necessário -->
 </div>
 {% endblock %}
 
 {% block content %}
+<!-- Início do CSS embutido -->
+<style>
+    /* Cor de fundo geral para a página */
+    body {
+        background-color: #A7D8FF;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Estilo para a área principal de login */
+    .paste-blue-bg {
+        background-color: #A7D8FF; /* Azul claro */
+    }
+
+    .form1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+       
+        
+    }
+
+    .academia h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Estilo para o formulário */
+    .form {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .form h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 25px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #A7D8FF;
+        box-shadow: 0 0 5px rgba(167, 216, 255, 0.7);
+    }
+
+    /* Estilo para o botão de login */
+    .botao {
+        background-color: #A7D8FF;
+        color: white;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 25px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .botao:hover {
+        background-color: #89c5f6;
+    }
+
+    /* Estilo para o link de registro */
+    .grey-14o-bg {
+        background-color: #000000FF;
+        padding: 1rem;
+        padding: 1rem;
+        border-radius: 25px;
+        width: 90%;
+        text-align: center;
+    }
+
+    .link {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .link:hover {
+        text-decoration: underline;
+    }
+
+    .text-white {
+        color: white;
+    }
+
+    /* Responsividade para dispositivos móveis */
+    @media (max-width: 768px) {
+        .form {
+            padding: 1.5rem;
+            width: 90%;
+        }
+
+        .academia h1 {
+            font-size: 2rem;
+        }
+
+        .botao {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+<!-- Fim do CSS embutido -->
+
 <div class="m-0 px-0 py-5 flex-grow-1 row align-items-center justify-content-center paste-blue-bg">
-  <div class="d-flex flex-column align-items-center justify-content-center gap-5">
-    <div class="d-flex flex-column justify-content-center align-items-center">
-      <img src="{% static 'img/logo_academia.svg'%}" alt="logo academia" style="width:300px;">
-      <h1 class="ms-3 mb-0 text-white shadow-text">A Academia</h1>
-    </div>
-    <div class="px-0 d-flex flex-column paste-blue-bg">
-      <form method="post" class="mb-lg-0 mb-4 d-flex flex-column align-items-center justify-content-center gap-3">
-        <h2 class="text-white">Login</h2>
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}">
-        <div class="form-group">
-            <input type="text" id="id_username" name="username" class="form-control rounded-pill fs-5"
-                placeholder="Usuário">
+    <div class="form1">
+        <div class="academia">
+            <h1 class="ms-3 mb-0 text-white shadow-text">A Academia</h1>
         </div>
-        <div class="form-group">
-            <input type="password" id="id_password" name="password" class="form-control rounded-pill fs-5"
-                placeholder="Senha">
+        <div class="px-0 d-flex flex-column paste-blue-bg">
+            <form method="post" class="form">
+                <h2 class="text-white">Login</h2>
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                <div class="form-group">
+                    <input type="text" id="id_username" name="username" class="form-control rounded-pill fs-5" placeholder="Usuário">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="id_password" name="password" class="form-control rounded-pill fs-5" placeholder="Senha">
+                </div>
+                <button id="btnLogin" type="submit" class="botao">Entrar</button>
+                <div class="d-flex flex-row gap-3 align-items-center justify-content-center grey-14o-bg rounded-5 p-5 w-sm-350">
+                    <span class="text-white">OU</span>
+                    <a class="link text-white text-decoration-none" href="{% url 'portal:register' %}">Registre-se</a>
+                </div>
+            </form>
         </div>
-        <button id="btnLogin" type="submit" class="px-5 btn btn-block rounded-5 bg-black fs-4 text-white">Entrar</button>
-        <div class="d-flex flex-row gap-3 align-items-center justify-content-center grey-14o-bg rounded-5 p-5 w-sm-350">
-            {% comment %} <a class="link text-white text-decoration-none" href="{% url 'password_reset' %}">Esqueceu a senha?</a> {% endcomment %}
-            <span class="text-white">OU</span>
-            <a class="link text-white text-decoration-none" href="{% url 'portal:register' %}">Registre-se</a>
-        </div>
-      </form>
     </div>
 </div>
+
 {% endblock %}

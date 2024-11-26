@@ -6,7 +6,7 @@ from portal.models.userinfo_models import UserInfo
 class UserInfoCreationForm(forms.ModelForm):
     full_name = forms.CharField(label="Nome completo", max_length=100, required=True)
     email = forms.CharField(label="E-mail", required=True)
-    planos = forms.ChoiceField(label='Planos', choices=[('plano1', 'Plano 1'), ('plano2', 'Plano 2')])
+    planos = forms.ChoiceField(label='Planos', choices=[('plano1', 'Musculação, R$119,99'), ('plano2', 'Artes Marciais, R$119,99'), ('plano3', 'Ginastica, R$119,99'), ('plano4', 'Musculação,Artes Marciais e Ginastica, R$199,99')], required=True)
     birthday = forms.DateField(label='Data de nascimento', help_text="Formato: DD/MM/YYYY")
     cpf = forms.CharField(label="CPF", required=True)  # Adicionando CPF
 
@@ -24,7 +24,7 @@ class UserInfoCreationForm(forms.ModelForm):
 class UserInfoEditForm(forms.ModelForm):
     full_name = forms.CharField(label="Nome completo",max_length=100, required=True)
     email = forms.CharField(label="email", required=True)
-    planos = forms.ChoiceField(label='planos',choices=[('plano1', 'Plano 1'), ('plano2', 'Plano 2')])
+    planos = forms.ChoiceField(label='planos',choices=[('plano1', 'Musculação, R$119,99'), ('plano2', 'Artes Marciais, R$119,99'), ('plano3', 'Ginastica, R$119,99')])
     birthday = forms.DateField(label='Data de nascimento',help_text="Formato: DD/MM/YYYY")
     cpf = forms.CharField(label="CPF", required=True)  # Adicionando CPF
 

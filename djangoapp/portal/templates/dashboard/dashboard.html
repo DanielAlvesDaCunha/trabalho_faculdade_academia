@@ -1,114 +1,219 @@
 {% load static %}
 
-{% block title %}Dashboard{% endblock %}
-
-
 {% block content %}
+<!-- Início do CSS embutido -->
+<style>
+    body {
+        background-color: #A7D8FF; /* Cor de fundo semelhante a outras páginas */
+    }
+    /* Layout geral para o dashboard */
+    .m-0 {
+        margin: 0;
+    }
+
+    .px-0 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .py-5 {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .flex-grow-1 {
+        flex-grow: 1;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .justify-content-center {
+        justify-content: center;
+    }
+
+    /* Adicionando fundo azul claro */
+    .paste-blue-bg {
+        background-color: #000000FF; /* Azul claro */
+    }
+
+    /* Container de cada seção */
+    .d-flex {
+        display: flex;
+    }
+
+    .flex-column {
+        flex-direction: column;
+    }
+
+    .gap-5 {
+        gap: 20px;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+
+    /* Estilo para os títulos */
+    h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #000000FF;
+        text-align: center;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    /* Estilo para as informações exibidas */
+    .bg-white {
+        background-color: #FFFFFFFF;
+        border-radius: 10px;
+    }
+
+    .rounded-4 {
+        border-radius: 4px;
+    }
+
+    .px-3 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .py-2 {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .fs-5 {
+        font-size: 1.25rem;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Estilo para os links e botões */
+    .rounded-pill {
+        border-radius: 50px;
+    }
+
+   
+    .w-auto {
+        width: auto;    
+    }
+
+    .text-white {
+        color: #fff;
+    }
+
+    .text-decoration-none {
+        text-decoration: none;
+    }
+
+    .px-3 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .fs-4 {
+        font-size: 1.5rem;
+    }
+
+    .btn-link {
+        display: inline-block;
+        padding: 0;
+        background: none;
+        border: none;
+        color: #ffffff;
+        text-decoration: underline;
+        font-size: 1.5rem;
+    }
+
+    /* Estilo para o status de matriculado e não matriculado */
+    .bg-success {
+        background-color: #28a745; /* Verde */
+    }
+
+    .bg-warning {
+        background-color: #ffc107; /* Amarelo */
+    }
+
+    .text-white {
+        color: white;
+    }
+
+    /* Estilos adicionais para responsividade */
+    @media (max-width: 768px) {
+        .gap-5 {
+            gap: 10px;
+        }
+
+        .fs-5 {
+            font-size: 1.1rem;
+        }
+
+        .fs-4 {
+            font-size: 1.3rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+<!-- Fim do CSS embutido -->
+
 <div class="m-0 px-0 py-5 flex-grow-1 row align-items-center justify-content-center">
     <div class="d-flex flex-column gap-5">
-        <div class="w-lg-50 w-90 mx-auto mt-5 p-5 rounded-4 d-flex flex-column justify-content-center grey-14o-bg ">
+        <!-- Informações Pessoais -->
+        <div class="forms_pessoais">
             <h3 class="d-flex justify-content-center mt-3">Informações Pessoais</h3>
             <div class="d-flex flex-column justify-content-center">
                 <h4>Nome Completo:</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{user_info.full_name}}</p>
+                <p class="bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{ user_info.full_name }}</p>
                 <h4>CPF</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{user_info.cpf}}</p>
+                <p class="bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{ user_info.cpf }}</p>
                 <h4>Data de Nascimento</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{user_info.birthday}}</p>
-
-                
+                <p class="bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{ user_info.birthday }}</p>
 
                 <div class="d-flex flex-row justify-content-center">
-                    <a href="/accounts/dashboard/user_info_edit" class="rounded-pill paste-blue-bg w-auto text-white text-decoration-none px-3 fs-4">Mudar dados</a>
+                    <a href="{% url 'portal:edit-info' %}" class="rounded-pill paste-blue-bg w-auto text-white text-decoration-none px-3 fs-4">Mudar dados</a>
                 </div>
             </div>
         </div>
         
-        <div class="w-lg-50 w-90 mx-auto mt-5 p-5 rounded-4 d-flex flex-column justify-content-center grey-14o-bg ">
+        <!-- Informações da Conta -->
+        <div class="forms_conta">
             <h3 class="d-flex justify-content-center mt-3">Informações da Conta</h3>
             <div class="d-flex flex-column justify-content-center">
                 <h4>Username</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{custom_user.username}}</p>
+                <p class="bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{ custom_user.username }}</p>
                 <h4>Email</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{custom_user.email}}</p>
+                <p class="bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{ custom_user.email }}</p>
+
                 <div class="d-flex flex-row justify-content-center">
-                    <a href="/accounts/dashboard/user_data_edit" class="rounded-pill paste-blue-bg w-auto text-white text-decoration-none px-3 fs-4">Mudar dados</a>
+                    <a href="{% url 'portal:edit-conta' %}" class="rounded-pill paste-blue-bg w-auto text-white text-decoration-none px-3 fs-4">Mudar dados</a>
                 </div>
-            </div>
-        </div>
-        
-        <div class="w-lg-50 w-90 mx-auto mt-5 p-0 rounded-4 d-flex flex-column justify-content-center align-items-center">
-            <div class="w-100 mb-3 d-flex flex-column grey-14o-bg rounded-4 justify-content-center align-items-center">
-                <h3 class="d-flex justify-content-center">Endereços</h3>
-                {% if dadosmatricula_count != 3%}
-                    <div class="grey-14o-bg d-flex justify-content-center m-3">
-                        <a href="/accounts/dashboard/user_address_add" class="rounded-pill paste-blue-bg w-auto text-white text-decoration-none px-3 fs-">Adicionar Endereço</a>
+                {% if matriculado %}
+                    <p class="bg-success text-white rounded-4 px-3 py-2 fs-5 mb-4"><strong>Usuário Matriculado</strong></p>
+                    <div class="d-flex flex-row justify-content-center mt-3">
+                        <a href="{% url 'portal:agendamento' %}" class="rounded-pill paste-blue-bg w-auto text-white text-decoration-none px-3 fs-4">Agendar Avaliação Física</a>
                     </div>
+                {% else %}
+                    <p class="bg-warning text-white rounded-4 px-3 py-2 fs-5 mb-4"><strong>Usuário Não Matriculado</strong></p>
                 {% endif %}
             </div>
-            {% for dadosmatricula in custom_address %}
-            <div class="grey-14o-bg mb-5 w-100 p-4 rounded-4 d-flex flex-column justify-content-center">
-                <h4>CEP</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{address.cep}}</p>
-                <h4>Estado</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{address.state}}</p>
-                <h4>Cidade</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{address.city}}</p>
-                <h4>Bairro</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{address.neighborhood}}</p>
-                <h4>Rua</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{address.street}}</p>
-                <h4>Número</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{address.number}}</p>
-                <h4>Complemento</h4>
-                <p class = "bg-white rounded-4 px-3 py-2 fs-5 mb-4">{{address.complement}}</p>
-
-                <div class="text-center">
-                    <a href="/accounts/dashboard/user_info_edit{{ dadosmatricula.id }}" class="rounded-pill paste-blue-bg w-auto text-white text-decoration-none px-3 fs-4">Mudar dados</a>
-                    <form id="delete-address-{{ address.id }}" action="{% url 'user-address-delete' address_id=address.id %}" method="post">
-                        {% csrf_token %}
-                        <button class="btn mt-2 mb-4" type="button" onclick="confirmDelete('delete-address-{{ address.id }}')">Deletar Endereço</button>
-                    </form>
-                </div>
-            </div>
-            {% endfor %} 
         </div>
+
     </div>
 </div>
-
-<script>
-    function confirmDelete(formId) {
-        const isConfirmed = confirm('Tem certeza que deseja deletar este endereço?');
-        if (isConfirmed) {
-            // Submete o formulário correspondente ao ID passado.
-            document.getElementById(formId).submit();
-        }
-    }
-    
-    
-    // Função auxiliar para obter o valor do cookie CSRFToken, necessário para as requisições POST
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-</script>
-
-<!-- Aqui você pode adicionar o trecho fornecido -->
-{% if dadosmatricula_id %}
-    <script>
-        // Chamada da função confirmDelete() apenas se address_id estiver definido
-        confirmDelete('{{ dadosmatricula_id }}');
-    </script>
-{% endif %}
-
 {% endblock %}

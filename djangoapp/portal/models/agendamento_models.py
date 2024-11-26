@@ -1,9 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils.timezone import now
+from django.conf import settings  # Importando settings para usar AUTH_USER_MODEL
 
 class Agendamento(models.Model):
-    aluno = models.ForeignKey(User, on_delete=models.CASCADE, related_name='agendamentos')
+    aluno = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='agendamentos')
     data_horario = models.DateTimeField()
     disponivel = models.BooleanField(default=True)  # Usado para verificar a disponibilidade
     criado_em = models.DateTimeField(auto_now_add=True)

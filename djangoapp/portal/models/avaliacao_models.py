@@ -1,10 +1,12 @@
-from portal import models
-from django.contrib.auth.models import User
+from django.db import models
+from django.conf import settings
+from django.utils import timezone
+from portal.models.agendamento_models import Agendamento
 
-
-class Agendamento(models.Model):
-    aluno = models.ForeignKey(User, on_delete=models.CASCADE, related_name='agendamentos')
-    data_horario = models.DateTimeField()
+class Avaliacao(models.Model):
+    aluno = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='avaliacoes')
+    agendamento = models.ForeignKey(Agendamento, on_delete=models.CASCADE, related_name='avaliacoes')
+    data_horario = models.DateTimeField(default=timezone.now)
     disponivel = models.BooleanField(default=True)
     peso = models.FloatField(null=True, blank=True)
     altura = models.FloatField(null=True, blank=True)
@@ -13,3 +15,4 @@ class Agendamento(models.Model):
 
     def __str__(self):
         return f"{self.aluno.username} - {self.data_horario}"
+

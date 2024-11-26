@@ -1,50 +1,171 @@
+<body>
+    {% block navbar %}
+    <div class="d-none d-lg-flex m-0 p-0 row h-8 paste-blue-bg">
+    </div>
+    {% endblock %}
 
-{% load static %}
+    {% block content %}
+    <!-- Início do CSS embutido -->
+    <style>
+        /* Cor de fundo geral */
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
 
-{% block title %}Registro{% endblock %}
+        /* Cor de fundo para a seção principal */
+        .paste-light-blue-bg {
+            background-color: #E3F2FD; /* Azul claro */
+        }
 
-{% block navbar %}
-<div class="d-none d-lg-flex m-0 p-0 row h-8 paste-blue-bg">
-</div>
-{% endblock %}
+        /* Container geral do conteúdo */
+        .forms_grande {
+            width: 100%;
+            max-width: 500px;  /* Diminuir a largura do formulário */
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: auto; /* Centraliza horizontalmente */
+        }
 
-{% block content %}
-<div class="m-0 px-0 py-5 flex-grow-1 row align-items-center justify-content-center paste-blue-bg">
-  <div class="d-flex flex-column align-items-center justify-content-center gap-5">
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <img src="{% static 'static/img/logo_academia.svg'%}" alt="logo academia" style="width:300px;">
-            <h1 class="ms-3 mb-0 text-white shadow-text">A academia</h1>
+        /* Estilo para os títulos */
+        .academia h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Estilo para o título do formulário */
+        .form h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Estilo para os campos de input */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .form-control:focus {
+            border-color: #A7D8FF;
+            box-shadow: 0 0 5px rgba(167, 216, 255, 0.7);
+        }
+
+        /* Estilo para o botão de registrar */
+        .botao-registrar {
+            background-color: #A7D8FF;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1.5rem;
+        }
+
+        .botao-registrar:hover {
+            background-color: #89c5f6;
+        }
+
+        /* Estilo para a lista de regras de senha */
+        .text-dark {
+            color: #333;
+        }
+
+        ul.text-dark {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 1rem;
+        }
+
+        ul.text-dark li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Estilo para o link de "Já possuo conta" */
+        .contaja {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contaja:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 768px) {
+            .forms_grande {
+                padding: 1.5rem;
+                width: 90%;
+            }
+
+            .academia h1 {
+                font-size: 2rem;
+            }
+
+            .botao-registrar {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+    <!-- Fim do CSS embutido -->
+
+    <div class="d-flex align-items-center justify-content-center min-vh-100 paste-light-blue-bg">
+        <div class="forms_grande">
+            <div class="academia">
+                <h1 class="a">A Academia</h1>
+            </div>
+            <div class="form">
+                <form method="post" class="form">
+                    <h2 class="text-dark">Registro</h2>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" id="id_username" class="form-control rounded-pill fs-5" placeholder="Usuário">
+                    </div>
+                    <span class="text-muted">Obrigatório. 150 caracteres ou menos. Letras, números e @/./+/-/_ apenas.</span>
+                    <div class="form-group">
+                        <input type="email" name="email" maxlength="254" required="" id="id_email" class="px-3 form-control fs-5 rounded-pill"  placeholder="E-mail">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" class="px-3 fs-5 rounded-pill form-control"  placeholder="Senha">
+                    </div>
+                    <ul class="text-dark">
+                        <li>Sua senha não pode ser muito parecida com o resto das suas informações pessoais.</li>
+                        <li>Sua senha precisa conter pelo menos 8 caracteres.</li>
+                        <li>Sua senha não pode ser uma senha comumente utilizada.</li>
+                        <li>Sua senha não pode ser inteiramente numérica.</li>
+                    </ul>
+                    <div class="form-group">
+                        <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" class="px-3 fs-5 rounded-pill form-control"  placeholder="Confirmação de Senha">
+                    </div>
+                    <button id="btnLogin" type="submit" class="botao-registrar">Registrar</button>
+                    <div class="mb-5 d-flex flex-row gap-3 align-items-center justify-content-center rounded-5 p-0 w-sm-350">
+                        <span class="text-dark">OU</span>
+                        <a class="contaja" href="{% url 'portal:login' %}">Já possuo conta</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="px-0 mx-0 mb-0 mt-5 d-flex flex-column w-auto paste-blue-bg">
-      <form method="post" class="mb-lg-0 mb-4 mx-2 d-flex flex-column align-items-center justify-content-center gap-3 grey-14o-bg rounded-5 p-2">
-        <h2 class="text-white ">Registro</h2>
-        {% csrf_token %}
-        <div class="form-group">
-            <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" id="id_username" class="form-control rounded-pill fs-5" placeholder="Usuário">
-        </div>
-        <span class="text-light">Obrigatório. 150 caracteres ou menos. Letras, números e @/./+/-/_ apenas.</span>
-        <div class="form-group">
-            <input type="email" name="email" maxlength="254" required="" id="id_email" class="px-3 form-control fs-5 rounded-pill"  placeholder="E-mail">
-        </div>
-        <div class="form-group">
-            <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" class="px-3 fs-5 rounded-pill form-control"  placeholder="Senha">
-        </div>
-        <ul class="text-white">
-            <li>Sua senha não pode ser muito parecida com o resto das suas informações pessoais.</li>
-            <li>Sua senha precisa conter pelo menos 8 caracteres.</li>
-            <li>Sua senha não pode ser uma senha comumente utilizada.</li>
-            <li>Sua senha não pode ser inteiramente numérica.</li>
-        </ul>
-        <div class="form-group">
-            <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" class="px-3 fs-5 rounded-pill form-control"  placeholder="Confirmação de Senha">
-        </div>
-        <button id = "btnLogin" type="submit" class="px-5 btn btn-block rounded-5 bg-black fs-4 text-white">Registrar</button>
-        <div class="mb-5 d-flex flex-row gap-3 align-items-center justify-content-center rounded-5 p-0 w-sm-350">
-            <span class="text-white">OU</span>
-            <a class="link text-white text-decoration-none" href="{% url 'portal:login' %}">Já possuo conta</a>
-        </div>
-      </form>
-    </div>
-</div>
-{% endblock %}
+    {% endblock %}
+    
+    {% block extra_js %}{% endblock %}
+</body>

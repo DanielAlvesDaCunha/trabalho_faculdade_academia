@@ -22,7 +22,8 @@ class UserInfoCreateView(LoginRequiredMixin, FormView):
             user_info = self.request.user.user_info
             # Verifique se todos os campos necessários estão preenchidos
             if user_info and all([user_info.full_name, user_info.cpf, user_info.planos]):
-                return redirect('portal:dashboard')  # Redireciona para o dashboard se as informações estiverem completas
+                # Considera que o usuário já está matriculado e vai direto para o dashboard
+                return redirect('portal:dashboard')
         except UserInfo.DoesNotExist:
             pass  # Continua no formulário de criação se não houver UserInfo ainda
         return super().get(request, *args, **kwargs)
@@ -33,14 +34,13 @@ class UserInfoCreateView(LoginRequiredMixin, FormView):
         user_info.user = self.request.user
         user_info.save()
 
-        # Simula o pagamento (não precisa de lógica de pagamento real)
-        # Atualiza o status do pagamento ou marca o usuário como "pago"
-        # Exemplo: user_info.pago = True  # Se você tivesse um campo "pago"
+        # Marca o usuário como matriculado (pagamento simulado)
+        user_info.pago = True  # Simula que o pagamento foi realizado
         user_info.save()
 
-        # Exibe uma mensagem de sucesso e redireciona para o dashboard
-        messages.success(self.request, 'Informações do usuário salvas com sucesso! Pagamento simulado.')
-        print(form.errors)
+        # Exibe uma mensagem de sucesso
+        messages.success(self.request, 'Informações do usuário salvas com sucesso! Você está matriculado.')
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

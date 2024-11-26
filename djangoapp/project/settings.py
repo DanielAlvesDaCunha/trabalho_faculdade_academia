@@ -137,4 +137,5 @@ MEDIA_ROOT = DATA_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'portal.CustomUser'
-LOGIN_REDIRECT_URL = 'portal:dashboard'
+LOGIN_REDIRECT_URL = '/portal/user_info_create/'
+
